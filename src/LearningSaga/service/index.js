@@ -1,18 +1,11 @@
-import {all,put,takeEvery} from 'redux-saga/effects'
-
-function* increment(){
-    // 相当于：dispatch({type:'increment'})
-    yield put({type:'increment'})
+export function loginService({ name, password }) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (name === "admin" && password === "admin") {
+        resolve({ success: true, name, password });
+      } else {
+        reject({ success: false, msg: "账户不合法" });
+      }
+    }, 1000);
+  });
 }
-
-function* watchIncrement(){
-    // 监听类型为increment_saga的action,监听到启动increment
-    yield takeEvery('incremnet_saga',increment)
-}
-
-function* rootSaga(){
-    // 启动watchIncrement
-    yield all([watchIncrement()])
-}
-
-export default rootSaga
